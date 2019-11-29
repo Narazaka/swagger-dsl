@@ -1,0 +1,7 @@
+inherit_from:
+  - .rubocop_airbnb.yml
+inherit_gem:
+  rubocop-config-prettier: config/rubocop.yml
+# prettier
+Style/PercentLiteralDelimiters:
+  Enabled: false
