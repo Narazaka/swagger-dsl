@@ -5,3 +5,7 @@ inherit_gem:
 # prettier
 Style/PercentLiteralDelimiters:
   Enabled: false
+Airbnb/OptArgParameters:
+  Enabled: false
+RSpec/EmptyExampleGroup:
+  Enabled: false
