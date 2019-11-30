@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.version = Swagger::DSL::VERSION
   spec.authors = %w[Narazaka]
   spec.email = %w[info@narazaka.net]
+  spec.licenses = %w[Zlib]
 
   spec.summary = "Swagger (OpenAPI 3) DSL"
   spec.homepage = "https://github.com/Narazaka/swagger-dsl"
