@@ -14,11 +14,12 @@ module Swagger
 
     attr_reader :paths, :components, :config
 
-    def initialize(openapi: nil, info: nil, paths: nil, components: nil, config: Config.new)
-      self["openapi"] = openapi || "3.0"
-      self["info"] = info || {}
-      self["paths"] = paths || {}
-      self["components"] = components || Components.new
+    def initialize(schema = nil, config: Config.new)
+      self.merge!(schema || {})
+      self["openapi"] ||= "3.0"
+      self["info"] ||= {}
+      self["paths"] ||= {}
+      self["components"] = Components[components || {}]
       @config = config
     end
   end
