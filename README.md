@@ -1,8 +1,6 @@
-# Swagger::Dsl
+# Swagger::DSL
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/swagger/dsl`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Swagger (OpenAPI 3) DSL
 
 ## Installation
 
@@ -22,7 +20,61 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+class BaseSerializer
+  extend Swagger::DSL::Serializer
+end
+
+class UserSerializer < BaseSerializer
+  swagger do
+    id :integer
+    name :string
+    age :integer, minimum: 18
+  end
+end
+
+class ApplicationController
+  extend Swagger::DSL::RailsController
+end
+
+class UsersController < ApplicationController
+  swagger :update, path: "/users/{id}", method: "put" do
+    params do
+      path :id, schema: :integer, required: true
+      query do
+        safe schema: :boolean
+        redirect do
+          required true
+          schema do
+            string!
+            format! "url"
+          end
+        end
+      end
+    end
+
+    body do
+      # name :string
+      # age :integer, minimum: 18
+      cref! UserSerializer # "#/components/User"
+    end
+
+    render 200, dsl: :jimmy do # another json schema dsl by "jimmy" gem
+      object do
+        string :status, enum: %w[ok], default: :ok
+        cref :user, UserSerializer
+        require all
+      end
+    end
+  end
+
+  def update
+    # some
+  end
+end
+
+JSON.dump(Swagger::DSL.current.as_json(except: "config"))
+```
 
 ## Development
 
