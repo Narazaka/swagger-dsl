@@ -7,5 +7,7 @@ Style/PercentLiteralDelimiters:
   Enabled: false
 Airbnb/OptArgParameters:
   Enabled: false
+Airbnb/SimpleModifierConditional:
+  Enabled: false
 RSpec/EmptyExampleGroup:
   Enabled: false

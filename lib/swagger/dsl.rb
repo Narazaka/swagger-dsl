@@ -2,9 +2,10 @@ require_relative "./dsl/config"
 require_relative "./dsl/version"
 require_relative "./dsl/rails_controller"
 require_relative "./dsl/serializer"
+require_relative "./dsl/components"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     class << self
       def current
         @current ||= new
@@ -13,18 +14,12 @@ module Swagger
 
     attr_reader :paths, :components, :config
 
-    def initialize(config: Config.new)
-      @paths = {}
-      @components = {}
+    def initialize(openapi: nil, info: nil, paths: nil, components: nil, config: Config.new)
+      self["openapi"] = openapi || "3.0"
+      self["info"] = info || {}
+      self["paths"] = paths || {}
+      self["components"] = components || Components.new
       @config = config
-    end
-
-    def to_schema
-      paths =
-        @paths.map do |path, methods|
-          [path, methods.map { |method, operation| [method, operation.to_schema] }.to_h]
-        end.to_h
-      { openapi: "3.0", info: @config.info, paths: paths, components: @components }
     end
   end
 end

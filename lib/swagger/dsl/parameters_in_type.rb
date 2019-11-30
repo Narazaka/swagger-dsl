@@ -1,7 +1,7 @@
 require_relative "./parameter"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     class ParametersInType
       def initialize(parent, type, &block)
         @parent = parent
@@ -14,7 +14,7 @@ module Swagger
       end
 
       def method_missing(name, *args, &block)
-        @parent.parameters << Parameter.new(name, *args, in: @type, &block)
+        @parent << Parameter.new(name, *args, in: @type, &block)
       end
     end
   end

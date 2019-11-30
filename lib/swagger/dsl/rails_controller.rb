@@ -4,12 +4,12 @@ require_relative "./operation"
 module Swagger
   class DSL
     module RailsController
-      def swagger(action, format = :json, &block)
+      # TODO: path, method detection
+      def swagger(action, format = :json, path:, method:, &block)
         operation_id = "#{name}##{action}"
-        path, method = [operation_id, "get"] # TODO
         operation = Swagger::DSL::Operation.new(operation_id, format: format, &block)
-        Swagger::DSL.current.paths[path] ||= {}
-        Swagger::DSL.current.paths[path][method] = operation
+        Swagger::DSL.current["paths"][path] ||= {}
+        Swagger::DSL.current["paths"][path][method] = operation
       end
 
       alias_method :oas3, :swagger
