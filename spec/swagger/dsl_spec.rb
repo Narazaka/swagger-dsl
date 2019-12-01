@@ -1,3 +1,27 @@
+# mocks
+
+class String
+  def underscore
+    "users_controller"
+  end
+end
+
+class Rails
+  def self.application
+    Struct.new(:routes).new(
+      Struct.new(:routes).new(
+        Struct.new(:routes).new(
+          Class.new do
+            def find
+              Struct.new(:verb, :path).new("patch", Struct.new(:spec).new("/users/{id}"))
+            end
+          end.new,
+        ),
+      ),
+    )
+  end
+end
+
 class BaseSerializer
   extend Swagger::DSL::Serializer
 end
@@ -15,7 +39,7 @@ class ApplicationController
 end
 
 class UsersController < ApplicationController
-  swagger :update, path: "/users/{id}", method: "put" do
+  swagger :update do
     params do
       path :id, schema: :integer, required: true
       query do
@@ -50,16 +74,18 @@ class UsersController < ApplicationController
   end
 end
 
+Swagger::DSL.current["info"] = { "title" => "my app", "version" => "0.1.0" }
+
 RSpec.describe Swagger::DSL do
   subject { Swagger::DSL.current }
 
   let(:schema) do
     {
-      "openapi" => "3.0",
-      "info" => {},
+      "openapi" => "3.0.0",
+      "info" => { "title" => "my app", "version" => "0.1.0" },
       "paths" => {
         "/users/{id}" => {
-          "put" => {
+          "patch" => {
             "operationId" => "UsersController#update",
             "parameters" => [
               { "name" => :id, "schema" => { "type" => :integer }, "required" => true, "in" => :path },
