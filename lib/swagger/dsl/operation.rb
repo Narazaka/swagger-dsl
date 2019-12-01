@@ -5,7 +5,12 @@ module Swagger
   class DSL
     class Operation < Hash
       FORMAT_TYPE = {
-        json: "application/json", xml: "application/xml", plain: "text/plain", html: "text/html", csv: "text/csv"
+        json: "application/json",
+        xml: "application/xml",
+        plain: "text/plain",
+        html: "text/html",
+        csv: "text/csv",
+        form: "application/x-www-form-urlencoded",
       }.freeze
 
       def initialize(operation_id, format: :json, &block)
@@ -22,9 +27,11 @@ module Swagger
       end
 
       def body(format: @format, dsl: nil, &block)
-        self["requestBody"]["content"][FORMAT_TYPE[format]] = {
-          "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block)
-        }
+        formats(format).each do |f|
+          self["requestBody"]["content"][f] = {
+            "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block)
+          }
+        end
       end
 
       def body_description(body_description = nil)
@@ -37,9 +44,17 @@ module Swagger
 
       def render(code = 200, format: @format, dsl: nil, &block)
         self["responses"][code] ||= { "content" => {} }
-        self["responses"][code]["content"][FORMAT_TYPE[format]] = {
-          "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block)
-        }
+        formats(format).each do |f|
+          self["responses"][code]["content"][f] = {
+            "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block)
+          }
+        end
+      end
+
+      private
+
+      def formats(format)
+        Array(format).map { |f| FORMAT_TYPE[f] }
       end
     end
   end
