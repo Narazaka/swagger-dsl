@@ -80,7 +80,7 @@ Swagger::DSL.current["info"] = {
   "version" => "0.1.0",
 }
 
-JSON.dump(Swagger::DSL.current.as_json)
+JSON.dump(Swagger::DSL.current)
 ```
 
 ## Development
