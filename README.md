@@ -73,6 +73,11 @@ class UsersController < ApplicationController
   end
 end
 
+Swagger::DSL.current["info"] = {
+  "title" => "my app",
+  "version" => "0.1.0",
+}
+
 JSON.dump(Swagger::DSL.current.as_json(except: "config"))
 ```
 
