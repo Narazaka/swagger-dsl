@@ -38,7 +38,7 @@ class ApplicationController
 end
 
 class UsersController < ApplicationController
-  swagger :update, path: "/users/{id}", method: "put" do
+  swagger :update do
     params do
       path :id, schema: :integer, required: true
       query do

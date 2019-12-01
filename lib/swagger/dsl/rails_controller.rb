@@ -4,9 +4,24 @@ require_relative "./operation"
 module Swagger
   class DSL
     module RailsController
-      # TODO: path, method detection
-      def swagger(action, format = :json, path:, method:, &block)
+      class NotMatch < StandardError; end
+      class NotExactMatch < StandardError; end
+
+      def swagger(action, format = :json, path: nil, method: nil, &block)
         operation_id = "#{name}##{action}"
+
+        defaults = { action: action.to_s, controller: name.underscore.sub(/_controller$/, "") }
+        route = Rails.application.routes.routes.routes.find { |r| r.required_defaults == defaults }
+        unless route
+          raise NotMatch,
+                "route not found! specify additional :path and :method key like { path: '/foos/{id}', method: 'get'}"
+        end
+        method ||= route.verb.downcase
+        if method.include?("|")
+          raise NotExactMatch, "route matched but verb can be #{verb}! specify :method key like 'get'."
+        end
+        path ||= route.path.spec.to_s.sub("(.:format)", "").gsub(/:(\w+)/, "{\\1}")
+
         operation = Swagger::DSL::Operation.new(operation_id, format: format, &block)
         Swagger::DSL.current["paths"][path] ||= {}
         Swagger::DSL.current["paths"][path][method] = operation
