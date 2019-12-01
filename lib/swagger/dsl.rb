@@ -15,7 +15,7 @@ module Swagger
     attr_reader :config
 
     def initialize(schema = nil, config: Config.new)
-      self.merge!(schema || {})
+      merge!(schema || {})
       self["openapi"] ||= "3.0"
       self["info"] ||= {}
       self["paths"] ||= {}
