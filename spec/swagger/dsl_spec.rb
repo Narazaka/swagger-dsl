@@ -1,3 +1,4 @@
+require "json"
 require_relative "./rails_fixture"
 
 RSpec.describe Swagger::DSL do
@@ -61,4 +62,5 @@ RSpec.describe Swagger::DSL do
   end
 
   it_is_asserted_by { subject == schema }
+  it_is_asserted_by { JSON.load(JSON.dump(subject)) == JSON.load(JSON.dump(schema)) }
 end
