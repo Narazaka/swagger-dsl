@@ -3,11 +3,14 @@ require_relative "./json_schema"
 module Swagger
   class DSL
     class Parameter < Hash
-      def initialize(*args, &block)
+      def initialize(options, *args, &block)
+        @default_required = options[:default_required]
+        self["required"] = true if @default_required
         unless args.empty?
           self["name"] = args.first
           args[1..-1].each { |arg| merge!(arg.map { |k, v| [k.to_s, v] }.to_h) }
           canonical_schema!
+          delete("required") unless self["required"]
         end
         instance_eval(&block) if block_given?
       end
@@ -17,8 +20,16 @@ module Swagger
         canonical_schema!
       end
 
-      %w[description required deprecated allowEmptyValue style explode allowReserved example examples].each do |name|
+      %w[description deprecated allowEmptyValue style explode allowReserved example examples].each do |name|
         define_method(name) { |value| self[name] = value }
+      end
+
+      def required(value)
+        if value
+          self["required"] = true
+        else
+          delete("required")
+        end
       end
 
       private

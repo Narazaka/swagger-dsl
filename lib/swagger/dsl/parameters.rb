@@ -3,14 +3,14 @@ require_relative "./parameters_in_type"
 module Swagger
   class DSL
     class Parameters < Array
-      def initialize(format: :json, &block)
-        @format = format
+      def initialize(default_required:, &block)
+        @default_required = default_required
         instance_eval(&block)
       end
 
       %i[path query header cookie].each do |in_type|
         define_method(in_type) do |*args, &block|
-          args.empty? ? ParametersInType.new(self, in_type, &block) : self << Parameter.new(*args, in: in_type, &block)
+          args.empty? ? ParametersInType.new(self, in_type, { default_required: @default_required }, &block) : self << Parameter.new({ default_required: @default_required }, *args, in: in_type, &block)
         end
       end
     end

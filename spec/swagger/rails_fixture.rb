@@ -37,9 +37,9 @@ end
 class UsersController < ApplicationController
   swagger :update do
     params do
-      path :id, schema: :integer, required: true
+      path :id, schema: :integer
       query do
-        safe schema: :boolean
+        safe schema: :boolean, required: false
         redirect do
           required true
           schema do

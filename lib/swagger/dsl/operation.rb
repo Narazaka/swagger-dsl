@@ -1,5 +1,6 @@
 require_relative "./json_schema"
 require_relative "./parameters"
+require_relative "../dsl"
 
 module Swagger
   class DSL
@@ -22,8 +23,8 @@ module Swagger
         instance_eval(&block)
       end
 
-      def params(&block)
-        self["parameters"] = Parameters.new(&block)
+      def params(default_required: Swagger::DSL.current.config.default_required, &block)
+        self["parameters"] = Parameters.new(default_required: default_required, &block)
       end
 
       def body(format: @format, dsl: nil, &block)
