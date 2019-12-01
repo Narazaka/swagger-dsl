@@ -20,6 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
+see also [swagger-serializer](https://github.com/Narazaka/swagger-serializer)
+
 ```ruby
 class BaseSerializer
   extend Swagger::DSL::Serializer
