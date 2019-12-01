@@ -14,9 +14,7 @@ RSpec.describe Swagger::DSL::ResolveModule do
   end
 
   describe "#resolve" do
-    subject do
-      Swagger::DSL.current.resolve({ "$ref" => "#/components/User" })
-    end
+    subject { Swagger::DSL.current.resolve({ "$ref" => "#/components/User" }) }
 
     let(:schema1) { Swagger::DSL.current["components"]["User"] }
 
@@ -24,9 +22,7 @@ RSpec.describe Swagger::DSL::ResolveModule do
   end
 
   describe "#resolver" do
-    subject do
-      Swagger::DSL.current.resolver.call({ "$ref" => "#/components/User" })
-    end
+    subject { Swagger::DSL.current.resolver.call({ "$ref" => "#/components/User" }) }
 
     let(:schema1) { Swagger::DSL.current["components"]["User"] }
 

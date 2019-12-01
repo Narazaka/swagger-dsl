@@ -6,7 +6,7 @@ module Swagger
   class DSL
     module ResolveModule
       def resolved
-        JsonRefs.call(self.deep_dup)
+        JsonRefs.call(deep_dup)
       end
 
       def resolver
