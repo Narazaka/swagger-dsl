@@ -3,9 +3,12 @@ require_relative "./dsl/version"
 require_relative "./dsl/rails_controller"
 require_relative "./dsl/serializer"
 require_relative "./dsl/components"
+require_relative "./dsl/resolve_module"
 
 module Swagger
   class DSL < Hash
+    include ResolveModule
+
     class << self
       def current
         @current ||= new
