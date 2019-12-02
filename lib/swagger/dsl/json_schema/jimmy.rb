@@ -2,7 +2,7 @@ require "jimmy"
 require_relative "./jimmy_patch"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     class JsonSchema
       class Jimmy
         DOMAIN = ::Jimmy::Domain.new("")

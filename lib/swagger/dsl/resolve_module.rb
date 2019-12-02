@@ -3,7 +3,7 @@ require "hana"
 require "active_support/core_ext/object/deep_dup"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     module ResolveModule
       def resolved
         JsonRefs.call(deep_dup)

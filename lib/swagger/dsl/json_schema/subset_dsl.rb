@@ -2,7 +2,7 @@ require "json/schema/subset/dsl"
 require_relative "../../dsl"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     class JsonSchema
       class SubsetDSL
         def self.dsl(&block)

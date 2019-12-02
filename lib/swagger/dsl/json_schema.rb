@@ -3,7 +3,7 @@ require_relative "./json_schema/jimmy"
 require_relative "../dsl"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     class JsonSchema
       def self.by(dsl_type = nil)
         dsl_type ||= Swagger::DSL.current.config.default_dsl

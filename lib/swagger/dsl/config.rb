@@ -1,5 +1,5 @@
 module Swagger
-  class DSL
+  class DSL < Hash
     class Config
       attr_accessor :inject_key, :default_dsl, :dsl_options, :eager, :default_required
 

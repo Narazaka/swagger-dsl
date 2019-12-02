@@ -2,7 +2,7 @@ require_relative "../dsl"
 require_relative "./operation"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     module RailsController
       class NotMatch < StandardError; end
       class NotExactMatch < StandardError; end

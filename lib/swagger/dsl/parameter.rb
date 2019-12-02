@@ -1,7 +1,7 @@
 require_relative "./json_schema"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     class Parameter < Hash
       def initialize(options, *args, &block)
         @default_required = options[:default_required]

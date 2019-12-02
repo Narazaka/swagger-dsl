@@ -1,7 +1,7 @@
 require_relative "./parameters_in_type"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     class Parameters < Array
       def initialize(default_required:, &block)
         @default_required = default_required

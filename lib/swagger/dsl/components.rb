@@ -3,7 +3,7 @@ require_relative "./parameters"
 require_relative "../dsl"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     class Components < Hash
       STRING = "".freeze
 

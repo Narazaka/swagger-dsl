@@ -2,7 +2,7 @@ require_relative "../dsl"
 require_relative "./json_schema"
 
 module Swagger
-  class DSL
+  class DSL < Hash
     module Serializer
       def swagger(dsl: nil, &block)
         name = self.name.sub(/Serializer$/, "")
