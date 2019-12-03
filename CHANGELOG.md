@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.0
+
+- mod: put / patch both define
+
 ## 1.2.0
 
 - mod(brake): params default required
