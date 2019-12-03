@@ -1,5 +1,5 @@
 module Swagger
   class DSL < Hash
-    VERSION = "1.2.1".freeze
+    VERSION = "1.3.0".freeze
   end
 end
