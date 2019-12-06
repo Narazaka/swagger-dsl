@@ -6,6 +6,7 @@ module Swagger
       def initialize(options, *args, &block)
         @default_required = options[:default_required]
         self["required"] = true if @default_required
+
         unless args.empty?
           self["name"] = args.first
           args[1..-1].each { |arg| merge!(arg.map { |k, v| [k.to_s, v] }.to_h) }

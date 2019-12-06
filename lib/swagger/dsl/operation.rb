@@ -29,9 +29,7 @@ module Swagger
 
       def body(format: @format, dsl: nil, &block)
         formats(format).each do |f|
-          self["requestBody"]["content"][f] = {
-            "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block)
-          }
+          self["requestBody"]["content"][f] = { "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block) }
         end
       end
 
@@ -46,9 +44,7 @@ module Swagger
       def render(code = 200, format: @format, dsl: nil, &block)
         self["responses"][code] ||= { "content" => {} }
         formats(format).each do |f|
-          self["responses"][code]["content"][f] = {
-            "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block)
-          }
+          self["responses"][code]["content"][f] = { "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block) }
         end
       end
 
