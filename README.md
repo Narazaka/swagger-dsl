@@ -90,6 +90,23 @@ So `params` are also default "required".
 
 If you do not want it, `Swagger::DSL.current.config.default_required = false`.
 
+### If Rails eager_load = true
+
+Rails controllers will be loaded before loading the routes when eager_load is enabled.
+
+So set `Swagger::DSL.current.config.lazy_define_paths = true`, `reload_routes!` and `Swagger::DSL.current.define_paths!`
+
+```ruby
+if Rails.application.config.eager_load
+  Swagger::DSL.current.config.lazy_define_paths = true
+  Rails.application.config.after_initialize do
+    Rails.application.reload_routes!
+    Swagger::DSL.current.define_paths!
+    JSON.dump(Swagger::DSL.current)
+  end
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
