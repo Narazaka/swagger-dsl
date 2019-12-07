@@ -11,15 +11,11 @@ RSpec.describe Swagger::DSL do
         { "name" => :id, "schema" => { "type" => :integer }, "required" => true, "in" => :path },
         { "name" => :safe, "schema" => { "type" => :boolean }, "in" => :query },
         {
-          "name" => :redirect,
-          "in" => :query,
-          "required" => true,
-          "schema" => { "type" => "string", "format" => "url" },
+          "name" => :redirect, "in" => :query, "required" => true, "schema" => { "type" => "string", "format" => "url" }
         },
       ],
       "requestBody" => {
-        "required" => true,
-        "content" => { "application/json" => { "schema" => { "$ref" => "#/components/User" } } },
+        "required" => true, "content" => { "application/json" => { "schema" => { "$ref" => "#/components/User" } } }
       },
       "responses" => {
         200 => {
@@ -45,12 +41,7 @@ RSpec.describe Swagger::DSL do
     {
       "openapi" => "3.0.0",
       "info" => { "title" => "my app", "version" => "0.1.0" },
-      "paths" => {
-        "/users/{id}" => {
-          "patch" => patch,
-          "put" => patch,
-        },
-      },
+      "paths" => { "/users/{id}" => { "patch" => patch, "put" => patch } },
       "components" => {
         "User" => {
           "type" => "object",
