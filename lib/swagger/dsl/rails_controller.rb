@@ -8,6 +8,15 @@ module Swagger
       class NotExactMatch < StandardError; end
 
       def swagger(action, format = :json, path: nil, method: nil, &block)
+        if Swagger::DSL.current.config.lazy_define_paths
+          Swagger::DSL.current.define_paths_procs <<
+            -> { swagger_define_path(action, format, path: path, method: method, &block) }
+        else
+          swagger_define_path(action, format, path: path, method: method, &block)
+        end
+      end
+
+      def swagger_define_path(action, format = :json, path: nil, method: nil, &block)
         operation_id = "#{name}##{action}"
 
         defaults = { action: action.to_s, controller: name.underscore.sub(/_controller$/, "") }
@@ -20,14 +29,12 @@ module Swagger
         if method.include?("|")
           raise NotExactMatch, "route matched but verb can be #{verb}! specify :method key like 'get'."
         end
-        method = ["put", "patch"] if ["put", "patch"].include?(method)
+        method = %w[put patch] if %w[put patch].include?(method)
         path ||= route.path.spec.to_s.sub("(.:format)", "").gsub(/:(\w+)/, "{\\1}")
 
         operation = Swagger::DSL::Operation.new(operation_id, format: format, &block)
         Swagger::DSL.current["paths"][path] ||= {}
-        Array(method).each do |single_method|
-          Swagger::DSL.current["paths"][path][single_method] = operation
-        end
+        Array(method).each { |single_method| Swagger::DSL.current["paths"][path][single_method] = operation }
       end
 
       alias_method :oas3, :swagger

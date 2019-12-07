@@ -15,7 +15,7 @@ module Swagger
       end
     end
 
-    attr_reader :config
+    attr_reader :config, :define_paths_procs
 
     def initialize(schema = nil, config: Config.new)
       merge!(schema || {})
@@ -24,6 +24,11 @@ module Swagger
       self["paths"] ||= {}
       self["components"] = Components[self["components"] || {}]
       @config = config
+      @define_paths_procs = []
+    end
+
+    def define_paths!
+      define_paths_procs.each(&:call)
     end
   end
 end
