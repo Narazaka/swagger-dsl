@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.0
+
+- add: lazy_define_paths for Rails eager_load
+
 ## 1.3.0
 
 - mod: put / patch both define
