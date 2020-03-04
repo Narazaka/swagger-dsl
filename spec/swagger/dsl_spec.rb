@@ -6,6 +6,9 @@ RSpec.describe Swagger::DSL do
 
   let(:patch) do
     {
+      "summary" => "Update a user",
+      "description" => "Lorem ipsum dolor sit amet.",
+      "tags" => [ "Users", "Updates" ],
       "operationId" => "UsersController#update",
       "parameters" => [
         { "name" => :id, "schema" => { "type" => :integer }, "required" => true, "in" => :path },

@@ -19,8 +19,23 @@ module Swagger
         self["requestBody"] = { "content" => {}, "required" => true }
         self["responses"] = {}
         self["parameters"] = []
+        self["tags"] = []
+        self["description"] = ""
+        self["summary"] = ""
         @format = format
         instance_eval(&block)
+      end
+
+      def summary(text)
+        self["summary"] = text
+      end
+
+      def description(text)
+        self["description"] = text
+      end
+
+      def tag(text)
+        self["tags"] << text
       end
 
       def params(default_required: Swagger::DSL.current.config.default_required, &block)
