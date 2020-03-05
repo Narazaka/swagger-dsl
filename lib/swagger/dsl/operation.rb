@@ -20,8 +20,6 @@ module Swagger
         self["responses"] = {}
         self["parameters"] = []
         self["tags"] = []
-        self["description"] = ""
-        self["summary"] = ""
         @format = format
         instance_eval(&block)
       end
@@ -34,8 +32,8 @@ module Swagger
         self["description"] = text
       end
 
-      def tag(text)
-        self["tags"] << text
+      def tags(*tags)
+        self["tags"].concat(tags.flatten(1))
       end
 
       def params(default_required: Swagger::DSL.current.config.default_required, &block)
