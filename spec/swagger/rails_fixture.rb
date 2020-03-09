@@ -36,6 +36,9 @@ end
 
 class UsersController < ApplicationController
   swagger :update do
+    summary "Update a user"
+    description "Lorem ipsum dolor sit amet."
+    tags "Users", "Updates"
     params do
       path :id, schema: :integer
       query do
