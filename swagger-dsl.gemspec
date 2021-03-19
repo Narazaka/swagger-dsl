@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "json-schema-subset-dsl", "~> 1.2"
   spec.add_dependency "hana", "~> 1.3"
   spec.add_dependency "json_refs", "~> 0.1"
-  spec.add_dependency "activesupport", "~> 6.0"
+  spec.add_dependency "activesupport", ">= 4.0.2"
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.9"
