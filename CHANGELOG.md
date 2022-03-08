@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.5
+
+- fix: unique operation id
+
 ## 2.0.4
 
 - fix: unique operation id

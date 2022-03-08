@@ -33,7 +33,7 @@ module Swagger
 
         Swagger::DSL.current["paths"][path] ||= {}
         Array(method).each do |single_method|
-          Swagger::DSL.current["paths"][path][single_method] = Swagger::DSL::Operation.new("#{name}##{action}.#{method}", format: format, &block)
+          Swagger::DSL.current["paths"][path][single_method] = Swagger::DSL::Operation.new("#{name}##{action}.#{single_method}", format: format, &block)
         end
       end
 
