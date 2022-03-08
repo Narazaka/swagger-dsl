@@ -5,7 +5,7 @@ module Swagger
   class DSL < Hash
     module Serializer
       def swagger(dsl: nil, &block)
-        name = self.name.sub(/Serializer$/, "")
+        name = self.name.sub(/Serializer$/, "").gsub(/::/, '-')
         Swagger::DSL.current["components"]["schemas"][name] =
           Swagger::DSL::JsonSchema.by(dsl).dsl(&block).merge(Swagger::DSL.current.config.inject_key => name)
       end

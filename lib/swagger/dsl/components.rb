@@ -18,7 +18,7 @@ module Swagger
       private
 
       def serializer_name(name)
-        name.to_s.sub(/(?:Serializer)?$/, "Serializer")
+        name.to_s.gsub(/-/, '::').sub(/(?:Serializer)?$/, "Serializer")
       end
     end
   end
