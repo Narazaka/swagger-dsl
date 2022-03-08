@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.0
+
+- fix(brake): adjust to OAS3 spec
+
 ## 1.4.0
 
 - add: lazy_define_paths for Rails eager_load
