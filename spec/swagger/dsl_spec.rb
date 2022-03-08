@@ -4,6 +4,29 @@ require_relative "./rails_fixture"
 RSpec.describe Swagger::DSL do
   subject { Swagger::DSL.current }
 
+  let(:get) do
+    {
+      "tags" => [],
+      "operationId" => "UsersController#index",
+      "parameters" => [],
+      "responses" => {
+        200 => {
+          "description" => "200",
+          "content" => {
+            "application/json" => {
+              "schema" => {
+                "type" => "array",
+                "items" => {
+                  "$ref" => "#/components/schemas/User",
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+  end
+
   let(:patch) do
     {
       "summary" => "Update a user",
@@ -18,7 +41,7 @@ RSpec.describe Swagger::DSL do
         },
       ],
       "requestBody" => {
-        "required" => true, "content" => { "application/json" => { "schema" => { "$ref" => "#/components/User" } } }
+        "required" => true, "content" => { "application/json" => { "schema" => { "$ref" => "#/components/schemas/User" } } }
       },
       "responses" => {
         200 => {
@@ -29,7 +52,7 @@ RSpec.describe Swagger::DSL do
                 "type" => "object",
                 "properties" => {
                   "status" => { "enum" => %w[ok], "default" => :ok, "type" => "string" },
-                  "user" => { "$ref" => "#/components/User" },
+                  "user" => { "$ref" => "#/components/schemas/User" },
                 },
                 "required" => %w[status user],
                 "additionalProperties" => false,
@@ -45,23 +68,29 @@ RSpec.describe Swagger::DSL do
     {
       "openapi" => "3.0.0",
       "info" => { "title" => "my app", "version" => "0.1.0" },
-      "paths" => { "/users/{id}" => { "patch" => patch, "put" => patch } },
+      "paths" => { "/users" => { "get" => get }, "/users/{id}" => { "patch" => patch, "put" => patch } },
       "components" => {
-        "User" => {
-          "type" => "object",
-          "properties" => {
-            "id" => { "type" => "integer" },
-            "name" => { "type" => "string" },
-            "age" => { "minimum" => 18, "type" => "integer" },
+        "schemas" => {
+          "User" => {
+            "type" => "object",
+            "properties" => {
+              "id" => { "type" => "integer" },
+              "name" => { "type" => "string" },
+              "age" => { "minimum" => 18, "type" => "integer" },
+            },
+            "required" => %w[id name age],
+            "title" => "User",
           },
-          "required" => %w[id name age],
-          "title" => "User",
         },
       },
     }
   end
 
-  it do
+  it 'should generate expected schema' do
     expect(subject.to_json).to be_json_eql(schema.to_json)
+  end
+
+  it 'has no errors' do
+    expect(Openapi3Parser.load(subject.to_json).errors).to be_empty
   end
 end

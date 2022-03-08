@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = %w[lib]
 
   spec.add_dependency "jimmy", "~> 0.5"
-  spec.add_dependency "json-schema-subset-dsl", "~> 1.2"
+  spec.add_dependency "json-schema-subset-dsl", "~> 2.0"
   spec.add_dependency "hana", "~> 1.3"
   spec.add_dependency "json_refs", "~> 0.1"
   spec.add_dependency "activesupport", ">= 4.0.2"
@@ -43,4 +43,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "yard", "~> 0.9"
   spec.add_development_dependency "pry-byebug", "~> 3.7"
   spec.add_development_dependency "json_spec", "~> 1"
+  spec.add_development_dependency "openapi3_parser", "~> 0.9.1"
 end

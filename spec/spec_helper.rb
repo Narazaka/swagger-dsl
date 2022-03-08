@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "swagger/dsl"
 require "json_spec"
+require "openapi3_parser"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

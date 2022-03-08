@@ -7,11 +7,10 @@ class Rails
     Struct.new(:routes).new(
       Struct.new(:routes).new(
         Struct.new(:routes).new(
-          Class.new do
-            def find
-              Struct.new(:verb, :path).new("patch", Struct.new(:spec).new("/users/{id}"))
-            end
-          end.new,
+          [
+            Struct.new(:verb, :path, :required_defaults).new("get", Struct.new(:spec).new("/users"), { action: "index", controller: "users" }),
+            Struct.new(:verb, :path, :required_defaults).new("patch", Struct.new(:spec).new("/users/{id}"), { action: "update", controller: "users" }),
+          ],
         ),
       ),
     )
@@ -35,6 +34,16 @@ class ApplicationController
 end
 
 class UsersController < ApplicationController
+  swagger :index do
+    render 200 do
+      array! { cref! UserSerializer }
+    end
+  end
+
+  def index
+    # some
+  end
+
   swagger :update do
     summary "Update a user"
     description "Lorem ipsum dolor sit amet."

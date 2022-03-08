@@ -5,7 +5,7 @@ module Jimmy
   class SchemaCreation
     module Referencing
       def component(id)
-        name = "#/components/#{id}"
+        name = "#/components/schemas/#{id}"
         reference_name = Swagger::DSL.current.config.dsl_options[:reference_name]
         reference_name ? reference_name.call(name) : name
       end

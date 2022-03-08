@@ -20,9 +20,10 @@ module Swagger
     def initialize(schema = nil, config: Config.new)
       merge!(schema || {})
       self["openapi"] ||= "3.0.0"
-      self["info"] ||= {}
+      self["info"] ||= { "title" => "OpenAPI schema", "version" => "0.0.0" }
       self["paths"] ||= {}
-      self["components"] = Components[self["components"] || {}]
+      self["components"] ||= {}
+      self["components"]["schemas"] = Components[self["components"]["schemas"] || {}]
       @config = config
       @define_paths_procs = []
     end

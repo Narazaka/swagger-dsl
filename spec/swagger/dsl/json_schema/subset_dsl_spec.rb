@@ -49,7 +49,7 @@ RSpec.describe Swagger::DSL::JsonSchema::SubsetDSL do
                 },
                 "type" => "array",
               },
-              "hoge" => { "$ref" => "#/components/aa" },
+              "hoge" => { "$ref" => "#/components/schemas/aa" },
               "fuga" => { "$ref" => "aa" },
             },
             "required" => %w[id bars bazs hoge fuga],
