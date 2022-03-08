@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.2
+
+- fix: unique operation id
+
 ## 2.0.1
 
 - fix(brake): nested class naming
