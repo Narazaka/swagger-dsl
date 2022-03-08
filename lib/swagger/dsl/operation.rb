@@ -16,7 +16,6 @@ module Swagger
 
       def initialize(operation_id, format: :json, &block)
         self["operationId"] = operation_id
-        self["requestBody"] = { "content" => {}, "required" => true }
         self["responses"] = {}
         self["parameters"] = []
         self["tags"] = []
@@ -42,15 +41,19 @@ module Swagger
 
       def body(format: @format, dsl: nil, &block)
         formats(format).each do |f|
+          self["requestBody"] ||= { "required" => true }
+          self["requestBody"]["content"] ||= {}
           self["requestBody"]["content"][f] = { "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block) }
         end
       end
 
       def body_description(body_description = nil)
+        self["requestBody"] ||= { "required" => true }
         self["requestBody"]["description"] = body_description
       end
 
       def body_optional(optional = true)
+        self["requestBody"] ||= {}
         self["requestBody"]["required"] = optional
       end
 
