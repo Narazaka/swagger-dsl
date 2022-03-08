@@ -55,7 +55,7 @@ module Swagger
       end
 
       def render(code = 200, format: @format, dsl: nil, &block)
-        self["responses"][code] ||= { "content" => {} }
+        self["responses"][code] ||= { "content" => {}, "description" => "#{code}" }
         formats(format).each do |f|
           self["responses"][code]["content"][f] = { "schema" => Swagger::DSL::JsonSchema.by(dsl).dsl(&block) }
         end
