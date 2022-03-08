@@ -17,8 +17,6 @@ module Swagger
       end
 
       def swagger_define_path(action, format = :json, path: nil, method: nil, &block)
-        operation_id = "#{name}##{action}"
-
         defaults = { action: action.to_s, controller: name.underscore.sub(/_controller$/, "") }
         route = Rails.application.routes.routes.routes.find { |r| r.required_defaults == defaults }
         unless route
@@ -32,6 +30,7 @@ module Swagger
         method = %w[put patch] if %w[put patch].include?(method)
         path ||= route.path.spec.to_s.sub("(.:format)", "").gsub(/:(\w+)/, "{\\1}")
 
+        operation_id = "#{name}##{action}.#{method}"
         operation = Swagger::DSL::Operation.new(operation_id, format: format, &block)
         Swagger::DSL.current["paths"][path] ||= {}
         Array(method).each { |single_method| Swagger::DSL.current["paths"][path][single_method] = operation }
