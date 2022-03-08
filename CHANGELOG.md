@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.1
+
+- fix(brake): nested class naming
+
 ## 2.0.0
 
 - fix(brake): adjust to OAS3 spec
