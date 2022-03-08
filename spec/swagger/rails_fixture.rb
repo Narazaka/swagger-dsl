@@ -21,11 +21,13 @@ class BaseSerializer
   extend Swagger::DSL::Serializer
 end
 
-class UserSerializer < BaseSerializer
-  swagger do
-    id :integer
-    name :string
-    age :integer, minimum: 18
+class Api
+  class UserSerializer < BaseSerializer
+    swagger do
+      id :integer
+      name :string
+      age :integer, minimum: 18
+    end
   end
 end
 
@@ -36,7 +38,7 @@ end
 class UsersController < ApplicationController
   swagger :index do
     render 200 do
-      array! { cref! UserSerializer }
+      array! { cref! Api::UserSerializer }
     end
   end
 
@@ -65,13 +67,13 @@ class UsersController < ApplicationController
     body do
       # name :string
       # age :integer, minimum: 18
-      cref! UserSerializer
+      cref! Api::UserSerializer
     end
 
     render 200, dsl: :jimmy do
       object do
         string :status, enum: %w[ok], default: :ok
-        cref :user, UserSerializer
+        cref :user, Api::UserSerializer
         require all
       end
     end

@@ -8,23 +8,23 @@ RSpec.describe Swagger::DSL::ResolveModule do
       ]
     end
 
-    let(:schema1) { Swagger::DSL.current["components"]["schemas"]["User"] }
+    let(:schema1) { Swagger::DSL.current["components"]["schemas"]["Api-User"] }
 
     it_is_asserted_by { subject == schema1 }
   end
 
   describe "#resolve" do
-    subject { Swagger::DSL.current.resolve({ "$ref" => "#/components/schemas/User" }) }
+    subject { Swagger::DSL.current.resolve({ "$ref" => "#/components/schemas/Api-User" }) }
 
-    let(:schema1) { Swagger::DSL.current["components"]["schemas"]["User"] }
+    let(:schema1) { Swagger::DSL.current["components"]["schemas"]["Api-User"] }
 
     it_is_asserted_by { subject == schema1 }
   end
 
   describe "#resolver" do
-    subject { Swagger::DSL.current.resolver.call({ "$ref" => "#/components/schemas/User" }) }
+    subject { Swagger::DSL.current.resolver.call({ "$ref" => "#/components/schemas/Api-User" }) }
 
-    let(:schema1) { Swagger::DSL.current["components"]["schemas"]["User"] }
+    let(:schema1) { Swagger::DSL.current["components"]["schemas"]["Api-User"] }
 
     it_is_asserted_by { subject == schema1 }
   end

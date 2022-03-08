@@ -13,7 +13,7 @@ module Swagger
       )
         @inject_key = inject_key
         @default_dsl = default_dsl
-        @dsl_options ||= { reference_name: ->(name) { name.sub(/Serializer$/, "") } }
+        @dsl_options ||= { reference_name: ->(name) { name.sub(/Serializer$/, "").gsub(/::/, '-') } }
         @eager = eager
         @default_required = default_required
         @lazy_define_paths = lazy_define_paths

@@ -17,7 +17,7 @@ RSpec.describe Swagger::DSL do
               "schema" => {
                 "type" => "array",
                 "items" => {
-                  "$ref" => "#/components/schemas/User",
+                  "$ref" => "#/components/schemas/Api-User",
                 },
               },
             },
@@ -41,7 +41,7 @@ RSpec.describe Swagger::DSL do
         },
       ],
       "requestBody" => {
-        "required" => true, "content" => { "application/json" => { "schema" => { "$ref" => "#/components/schemas/User" } } }
+        "required" => true, "content" => { "application/json" => { "schema" => { "$ref" => "#/components/schemas/Api-User" } } }
       },
       "responses" => {
         200 => {
@@ -52,7 +52,7 @@ RSpec.describe Swagger::DSL do
                 "type" => "object",
                 "properties" => {
                   "status" => { "enum" => %w[ok], "default" => :ok, "type" => "string" },
-                  "user" => { "$ref" => "#/components/schemas/User" },
+                  "user" => { "$ref" => "#/components/schemas/Api-User" },
                 },
                 "required" => %w[status user],
                 "additionalProperties" => false,
@@ -71,7 +71,7 @@ RSpec.describe Swagger::DSL do
       "paths" => { "/users" => { "get" => get }, "/users/{id}" => { "patch" => patch, "put" => patch } },
       "components" => {
         "schemas" => {
-          "User" => {
+          "Api-User" => {
             "type" => "object",
             "properties" => {
               "id" => { "type" => "integer" },
@@ -79,7 +79,7 @@ RSpec.describe Swagger::DSL do
               "age" => { "minimum" => 18, "type" => "integer" },
             },
             "required" => %w[id name age],
-            "title" => "User",
+            "title" => "Api-User",
           },
         },
       },
