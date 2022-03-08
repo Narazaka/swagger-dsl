@@ -27,14 +27,14 @@ module Swagger
         if method.include?("|")
           raise NotExactMatch, "route matched but verb can be #{verb}! specify :method key like 'get'."
         end
-        operation_id = "#{name}##{action}.#{method}"
 
         method = %w[put patch] if %w[put patch].include?(method)
         path ||= route.path.spec.to_s.sub("(.:format)", "").gsub(/:(\w+)/, "{\\1}")
 
-        operation = Swagger::DSL::Operation.new(operation_id, format: format, &block)
         Swagger::DSL.current["paths"][path] ||= {}
-        Array(method).each { |single_method| Swagger::DSL.current["paths"][path][single_method] = operation }
+        Array(method).each do |single_method|
+          Swagger::DSL.current["paths"][path][single_method] = Swagger::DSL::Operation.new("#{name}##{action}.#{method}", format: format, &block)
+        end
       end
 
       alias_method :oas3, :swagger
