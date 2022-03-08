@@ -42,4 +42,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop-config-prettier", "~> 0.1"
   spec.add_development_dependency "yard", "~> 0.9"
   spec.add_development_dependency "pry-byebug", "~> 3.7"
+  spec.add_development_dependency "json_spec", "~> 1"
 end

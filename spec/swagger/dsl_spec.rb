@@ -22,6 +22,7 @@ RSpec.describe Swagger::DSL do
       },
       "responses" => {
         200 => {
+          "description" => "200",
           "content" => {
             "application/json" => {
               "schema" => {
@@ -60,6 +61,7 @@ RSpec.describe Swagger::DSL do
     }
   end
 
-  it_is_asserted_by { subject == schema }
-  it_is_asserted_by { JSON.load(JSON.dump(subject)) == JSON.load(JSON.dump(schema)) }
+  it do
+    expect(subject.to_json).to be_json_eql(schema.to_json)
+  end
 end
